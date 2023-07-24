@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
     Avatar,
     Box,
-    Button,
     List,
     ListItem,
     ListItemButton,
@@ -22,7 +21,7 @@ const games = [
 ];
 
 
-function DrawerCompact() {
+function DrawerCompact({ onItemClick }) {
     /**
      * Icons only drawer
      */
@@ -33,11 +32,11 @@ function DrawerCompact() {
             <List>
                 {games.map((game, index) => (
                     <ListItem key={game.name} disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => onItemClick(game.name)}>
                             <ListItemIcon
                                 sx={{ minWidth: 0 }} // Center list item icon
                             >
-                                <Avatar alt={game.name} src={game.icon} variant="circular"></Avatar>
+                                <Avatar alt={game.name} src={game.icon} variant="circular" ></Avatar>
                             </ListItemIcon>
                         </ListItemButton>
                     </ListItem>
@@ -48,7 +47,7 @@ function DrawerCompact() {
 }
 
 
-function DrawerExpanded() {
+function DrawerExpanded({ onItemClick }) {
     /**
      * Icons + texts drawer
      */
@@ -59,14 +58,14 @@ function DrawerExpanded() {
             <List>
                 {games.map((game, index) => (
                     <ListItem key={game.name} disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => onItemClick(game.name)}>
                             <ListItemIcon sx={{
                                 minWidth: 0, // Center list item icon
                                 paddingRight: 1 // Space between icon and text
                             }}>
                                 <Avatar alt={game.name} src={game.icon} variant="rounded"></Avatar>
                             </ListItemIcon>
-                            <ListItemText>{game.name}</ListItemText>
+                            <ListItemText sx={{ minWidth: 115 }}>{game.name}</ListItemText>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -76,10 +75,11 @@ function DrawerExpanded() {
 }
 
 
-function Drawer({ drawerCompact }) {
+function Drawer({ drawerCompact, onItemClick }) {
     // const [drawerCompact, setDrawercompact] = useState(true);
+
     return (
-        drawerCompact ? <DrawerCompact /> : <DrawerExpanded />
+        drawerCompact ? <DrawerCompact onItemClick={onItemClick}/> : <DrawerExpanded onItemClick={onItemClick}/>
     );
 }
 
